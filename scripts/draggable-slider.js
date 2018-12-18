@@ -5,6 +5,7 @@ $(document).ready(function () {
         var dragItems = document.querySelectorAll(".slide-fix");
         var slideWidth = $(container).data("slide-width");
         var slideView = $(container).data("slide-view");
+        var slideMove = $(container).data("slide-move");
         var active = false;
         var currentX;
         var currentY;
@@ -48,13 +49,17 @@ $(document).ready(function () {
 
             function dragEnd(e) {
                 dragItem.style.transition = "1s";
-                if(currentX <= (xOffset-(slideWidth/2))) {
-                    xOffset -= slideWidth;
+                // console.log(xOffset);
+                if(currentX <= (xOffset-((slideWidth * slideMove)/2))) {
+                    console.log("if");
+                    xOffset -= (slideWidth * slideMove);
                     dragItem.style.transform = "translate3d(" + xOffset + "px, " + 0 + "px, 0)";
-                }else if(currentX > (xOffset+(slideWidth/2))){
-                    xOffset += slideWidth;
+                }else if(currentX > (xOffset+((slideWidth * slideMove)/2))){
+                    console.log("elseif");
+                    xOffset += (slideWidth * slideMove);
                     dragItem.style.transform = "translate3d(" + xOffset + "px, " + 0 + "px, 0)";
                 }else{
+                    console.log("else");
                     dragItem.style.transform = "translate3d(" + xOffset + "px, " + 0 + "px, 0)";
                     initialX = 0;
                     initialY = 0;
