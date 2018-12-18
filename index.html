@@ -6,48 +6,49 @@
     <title>Draggable Slider</title>
     <link rel="stylesheet" href="./stylessheets/style.css">
     <script src="./scripts/jquery.min.js"></script>
+    <script src="./scripts/draggable-slider.js"></script>
 </head>
 <body style="background-color: #f1f1f1;height: 200vh;overflow-x: hidden">
 
 <div class="draggable-slider">
-    <div class="draggable-slider-container" data-slide-width="300" data-slide-view="4" data-slide-move="2">
-        <div class="d-slide">
+    <div class="draggable-slider-container" data-slide-width="300" data-slide-view="4" data-slide-move="4">
+        <div class="d-slide first-slide" data-slide-id="1" data-slide-position="first-slide">
             <div class="slide-content">
-                <img src="./images/slide1.jpg" alt="">
+                <img src="./images/slide1.jpg" alt="slide1">
                 <!--<button>More info</button>-->
                 <div class="slide-fix"></div>
             </div>
         </div>
-        <div class="d-slide">
+        <div class="d-slide" data-slide-id="2" data-slide-position="">
             <div class="slide-content">
                 <img src="./images/slide2.jpg" alt="slide2">
                 <!--<button>More info</button>-->
                 <div class="slide-fix"></div>
             </div>
         </div>
-        <div class="d-slide">
+        <div class="d-slide" data-slide-id="3" data-slide-position="">
             <div class="slide-content">
                 <img src="./images/slide3.jpg" alt="slide3">
                 <!--<button>More info</button>-->
                 <div class="slide-fix"></div>
             </div>
         </div>
-        <div class="d-slide">
+        <div class="d-slide" data-slide-id="4" data-slide-position="last-slide">
             <div class="slide-content">
                 <img src="./images/slide4.jpg" alt="slide4">
                 <!--<button>More info</button>-->
                 <div class="slide-fix"></div>
             </div>
         </div>
-        <div class="d-slide">
+        <div class="d-slide" data-slide-id="5" data-slide-position="right-slide">
             <div class="slide-content">
                 <img src="./images/slide5.jpg" alt="slide5">
                 <!--<button>More info</button>-->
                 <div class="slide-fix"></div>
             </div>
         </div>
-        <div class="d-slide">
-            <div class="slide-content">
+        <div class="d-slide last-slide" data-slide-id="6" data-slide-position="right-slide">
+            <div class="slide-content" data-slide-id="6">
                 <img src="./images/slide6.jpg" alt="slide6">
                 <!--<button>More info</button>-->
                 <div class="slide-fix"></div>
@@ -56,7 +57,9 @@
     </div>
 </div>
 
-<script src="./scripts/draggable-slider.js"></script>
+
+
+
 
 </body>
 </html>
