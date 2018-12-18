@@ -12,61 +12,14 @@ $(document).ready(function () {
         var xOffset = 0;
         var yOffset = 0;
         var containerWidth = dragItems.length * slideWidth;
-        // var first, last;
 
         var dragItemsObj = [];
 
-        container.style.width = (containerWidth * 2) + "px"; /* For Test */
+        container.style.width = (containerWidth * 3) + "px"; /* For Test */
         draggableSlider.style.width = (slideWidth * slideView) + "px";
 
         $(dragItems).each(function (index,dragItem) {
             dragItemsObj.push(dragItem);
-            var _dragItem = dragItem;
-            var parentFind = false;
-            while (!parentFind) {
-                if ($(dragItem).hasClass("d-slide")) {
-                    parentFind = true;
-                } else {
-                    dragItem = dragItem.parentNode;
-                }
-            }
-            // if ($(dragItem).data("slide-id") == 1) {
-            //     first = dragItem;
-            // }
-            // if ($(dragItem).data("slide-id") == 6) {
-            //     last = dragItem;
-            // }
-            // if ($(dragItem).data("slide-id") == 1){
-            //     var el = $(dragItem).clone();
-            //     // $(container).prepend(last);
-            //     $(el).insertBefore($(first));
-            // }
-            // if ($(dragItem).data("slide-id") == 2){
-            //     var el = $(dragItem).clone();
-            //     // $(container).prepend(last);
-            //     $(el).insertBefore($(first));
-            // }
-            // if ($(dragItem).data("slide-id") == 3){
-            //     var el = $(dragItem).clone();
-            //     // $(container).prepend(last);
-            //     $(el).insertBefore($(first));
-            // }
-            // if ($(dragItem).data("slide-id") == 4){
-            //     var el = $(dragItem).clone();
-            //     // $(container).prepend(last);
-            //     $(el).insertBefore($(first));
-            // }
-            // if ($(dragItem).data("slide-id") == 5){
-            //     var el = $(dragItem).clone();
-            //     // $(container).prepend(last);
-            //     $(el).insertBefore($(first));
-            // }
-            // if ($(dragItem).data("slide-id") == 6){
-            //     var el = $(dragItem).clone();
-            //     // $(container).prepend(last);
-            //     $(el).insertBefore($(first));
-            // }
-
         });
 
         var itemsCountForLast = dragItemsObj.length - slideView;
@@ -74,14 +27,11 @@ $(document).ready(function () {
             var di = $(dragItemsObj[i-1].parentNode.parentNode).clone();
             container.prepend(di[0]);
         }
-        console.log((dragItemsObj.length - slideView) == slideView);
-        console.log((dragItemsObj.length - slideView));
+
         if (!(dragItemsObj.length - slideView) <= slideView){
-            console.log("if run");
             for (var i=1; i<= (slideView - (dragItemsObj.length - slideView)) ; i++){
-                console.log("for run");
-                var di = $(dragItemsObj[i-1].parentNode.parentNode).clone();
-                container.append(di[0]);
+                var targetItem = $(dragItemsObj[i-1].parentNode.parentNode).clone();
+                container.append(targetItem[0]);
             }
         }
 
@@ -129,9 +79,11 @@ $(document).ready(function () {
                 if(currentX <= (xOffset-((slideWidth * slideMove)/2))) {
                     xOffset -= (slideWidth * slideMove);
                     dragItem.style.transform = "translate3d(" + xOffset + "px, " + 0 + "px, 0)";
+                    goRight();
                 }else if(currentX > (xOffset+((slideWidth * slideMove)/2))){
                     xOffset += (slideWidth * slideMove);
                     dragItem.style.transform = "translate3d(" + xOffset + "px, " + 0 + "px, 0)";
+                    goLeft();
                 }else{
                     dragItem.style.transform = "translate3d(" + xOffset + "px, " + 0 + "px, 0)";
                     initialX = 0;
@@ -158,6 +110,34 @@ $(document).ready(function () {
             function setTranslate(xPos, yPos, el) {
                 el.style.transform = "translate3d(" + xPos + "px, " + 0 + "px, 0)";
             }
+
+            function goRight() {
+                var __dragItems = document.querySelectorAll(".slide-fix");
+                var _parentFind = false;
+                while(! parentFind){
+                    if($(__dragItem).hasClass("d-slide")){
+                        _parentFind = true;
+                    }else{
+                        __dragItem = __dragItem.parentNode;
+                    }
+                }
+                console.log(__dragItem);
+                var lastID = $($(__dragItems).last()[0]).data("slide-id");
+                for (var i=lastID +1; i<= (lastID + 1 + slideView) ; i++){
+                    var targetItem = $(dragItemsObj[i-1].parentNode.parentNode).clone();
+                    container.append(targetItem[0]);
+                    $(targetItem[0]).css("translate","translate3d( -1000px , 100px , 0)");
+                }
+            }
+            function goLeft() {
+                var __dragItems = document.querySelectorAll(".slide-fix");
+                var firstID = $($(__dragItems).first()[0]).data("slide-id");
+                for (var i=firstID +1; i<= (firstID + 1 + slideView) ; i++){
+                    var targetItem = $(dragItemsObj[i-1].parentNode.parentNode).clone();
+                    container.prepend(targetItem[0]);
+                }
+            }
+
         });
 
     });
