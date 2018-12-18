@@ -1,14 +1,18 @@
 $(document).ready(function () {
-    var draggableSlider = document.querySelector(".draggable-slider");
-    $(draggableSlider).each(function (index,container) {
+    var draggableSliderContainer = document.querySelector(".draggable-slider-container");
+    $(draggableSliderContainer).each(function (index,container) {
+        var draggableSlider = document.querySelector(".draggable-slider");
         var dragItems = document.querySelectorAll(".slide-fix");
         var slideWidth = $(container).data("slide-width");
+        var slideView = $(container).data("slide-view");
         var active = false;
         var currentX;
         var currentY;
         var xOffset = 0;
         var yOffset = 0;
-
+        var containerWidth = dragItems.length * slideWidth;
+        container.style.width = containerWidth + "px";
+        draggableSlider.style.width = (slideWidth * slideView) + "px";
         $(dragItems).each(function (index,dragItem) {
             var _dragItem = dragItem;
             var parentFind = false;
