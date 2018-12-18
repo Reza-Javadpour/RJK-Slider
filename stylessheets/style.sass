@@ -1,0 +1,41 @@
+.draggable-slider
+  width: 100%
+  padding-top: 50px
+  padding-bottom: 50px
+  background-color: #e2e2e2
+  display: flex
+  align-items: center
+  justify-content: center
+  overflow: hidden
+  touch-action: none
+
+  .d-slide
+    width: 300px
+    padding: 0 10px
+    touch-action: none
+    user-select: none
+    .slide-content
+      background-color: #fff
+      border: solid 1px #eee
+      min-height: 100%
+      position: relative
+      .slide-fix
+        position: absolute
+        top: 0
+        width: 100%
+        height: 100%
+        display: block
+        z-index: 10
+        touch-action: none
+        user-select: none
+        &:hover
+          cursor: pointer
+      img
+        width: 100%
+      button
+        position: absolute
+        bottom: 0
+        right: 0
+        z-index: 2000
+    &:hover
+      cursor: pointer
