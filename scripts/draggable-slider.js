@@ -13,7 +13,6 @@ $(document).ready(function () {
         var xOffset = 0;
         var yOffset = 0;
         var containerWidth = dragItems.length * slideWidth;
-
         var dragItemsObj = [];
 
         container.style.width = (containerWidth * 3) + "px"; /* For Test */
@@ -37,7 +36,6 @@ $(document).ready(function () {
         }
 
         refreshDragItems();
-
         $(dragItems).each(function (index,dragItem) {
             var _dragItem = dragItem;
             findSlideParent(dragItem);
@@ -120,6 +118,7 @@ $(document).ready(function () {
         });
 
         function goRight() {
+            console.log(dragItems);
             var __dragItems = $(".d-slide");
             for(var i=0;i<slideMove;i++){
                 $(__dragItems[i]).remove();
@@ -133,12 +132,13 @@ $(document).ready(function () {
 
 
             var lastID = $($(__dragItems).last()[0]).data("slide-id");
-            for (var i=lastID +1; i<= (lastID + 1 + slideView) ; i++){
+            for (var i=lastID +1; i< (lastID + 1 + slideView) ; i++){
                 var targetItem = $(dragItemsObj[i-1].parentNode.parentNode).clone();
                 container.append(targetItem[0]);
                 $(targetItem[0]).css("transform","translate( -" + (slideMove * slideWidth * 2) + "px , 0)");
             }
             refreshDragItems();
+            dragItems = document.querySelectorAll(".slide-fix");
         }
 
         function goLeft() {
