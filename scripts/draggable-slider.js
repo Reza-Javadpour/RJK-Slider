@@ -3,6 +3,7 @@ $(document).ready(function () {
     $(draggableSliderContainer).each(function (index,container) {
         var draggableSlider = document.querySelector(".draggable-slider");
         var dragItems = document.querySelectorAll(".slide-fix");
+        var slideCount = document.querySelectorAll(".d-slide").length;
         var slideWidth = $(container).data("slide-width");
         var slideView = $(container).data("slide-view");
         var slideMove = $(container).data("slide-move");
@@ -35,16 +36,19 @@ $(document).ready(function () {
             }
         }
 
-        dragItems = document.querySelectorAll(".slide-fix");
+        refreshDragItems();
 
         $(dragItems).each(function (index,dragItem) {
             var _dragItem = dragItem;
-            var parentFind = false;
-            while(! parentFind){
-                if($(dragItem).hasClass("d-slide")){
-                    parentFind = true;
-                }else{
-                    dragItem = dragItem.parentNode;
+            findSlideParent(dragItem);
+            function findSlideParent() {
+                var parentFind = false;
+                while(! parentFind){
+                    if($(dragItem).hasClass("d-slide")){
+                        parentFind = true;
+                    }else{
+                        dragItem = dragItem.parentNode;
+                    }
                 }
             }
 
@@ -118,29 +122,67 @@ $(document).ready(function () {
         function goRight() {
             var __dragItems = $(".d-slide");
             for(var i=0;i<slideMove;i++){
-                console.log($(__dragItems[i]).remove());
+                $(__dragItems[i]).remove();
             }
             __dragItems = $(".d-slide");
-            $(__dragItems).each(function (index,item) {
+            // $(__dragItems).each(function (index,item) {
                 // xOffset += (slideView * slideWidth);
-            })
+            // });
             containerPaddingLeft = parseInt($(container).css("padding-left").slice(0,-2) ) + (slideMove * slideWidth);
-            console.log(containerPaddingLeft);
             $(container).css("padding-left",containerPaddingLeft + "px");
+
+
+            var lastID = $($(__dragItems).last()[0]).data("slide-id");
+            for (var i=lastID +1; i<= (lastID + 1 + slideView) ; i++){
+                var targetItem = $(dragItemsObj[i-1].parentNode.parentNode).clone();
+                container.append(targetItem[0]);
+                $(targetItem[0]).css("transform","translate( -" + (slideMove * slideWidth * 2) + "px , 0)");
+            }
+            refreshDragItems();
+        }
+
+        function goLeft() {
+            var __dragItems = $(".d-slide");
+            for(var i=(__dragItems.length - slideMove);i<(__dragItems.length);i++){
+                $(__dragItems[i]).remove();
+            }
+            __dragItems = $(".d-slide");
+            containerPaddingRight = parseInt($(container).css("padding-right").slice(0,-2) ) + (slideMove * slideWidth);
+            $(container).css("padding-right",containerPaddingRight + "px");
+
+
+            var firstID = $($(__dragItems).first()).data("slide-id");
+            if(firstID < slideView){
+                if(firstID - slideView <= 0) {
+                    firstID = firstID - slideView + slideCount;
+                }
+            }
             // var lastID = $($(__dragItems).last()[0]).data("slide-id");
-            // for (var i=lastID +1; i<= (lastID + 1 + slideView) ; i++){
+            var targetItem;
+            for (var i=firstID; i< (firstID + slideView) ; i++){
+                if(i <= slideCount){
+                    targetItem = $(dragItemsObj[i-1].parentNode.parentNode).clone();
+                    container.append(targetItem[0]);
+                    $(targetItem[0]).css("transform","translate( -" + (slideMove * slideWidth * 3) + "px , 0)");
+                }else{
+                    var _i = i - slideCount;
+                    targetItem = $(dragItemsObj[_i-1].parentNode.parentNode).clone();
+                    container.append(targetItem[0]);
+                    $(targetItem[0]).css("transform","translate( -" + (slideMove * slideWidth * 3) + "px , 0)");
+                }
+                console.log(i);
+            }
+            refreshDragItems();
+            // var __dragItems = document.querySelectorAll(".slide-fix");
+            // var firstID = $($(__dragItems).first()[0]).data("slide-id");
+            // for (var i=firstID +1; i<= (firstID + 1 + slideView) ; i++){
             //     var targetItem = $(dragItemsObj[i-1].parentNode.parentNode).clone();
-            //     container.append(targetItem[0]);
-            //     $(targetItem[0]).css("translate","translate3d( -1000px , 100px , 0)");
+            //     container.prepend(targetItem[0]);
             // }
         }
-        function goLeft() {
-            var __dragItems = document.querySelectorAll(".slide-fix");
-            var firstID = $($(__dragItems).first()[0]).data("slide-id");
-            for (var i=firstID +1; i<= (firstID + 1 + slideView) ; i++){
-                var targetItem = $(dragItemsObj[i-1].parentNode.parentNode).clone();
-                container.prepend(targetItem[0]);
-            }
+
+        function refreshDragItems() {
+            dragItems = document.querySelectorAll(".slide-fix");
         }
 
     });
