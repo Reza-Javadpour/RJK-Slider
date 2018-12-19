@@ -111,34 +111,37 @@ $(document).ready(function () {
                 el.style.transform = "translate3d(" + xPos + "px, " + 0 + "px, 0)";
             }
 
-            function goRight() {
-                var __dragItems = document.querySelectorAll(".slide-fix");
-                var _parentFind = false;
-                while(! parentFind){
-                    if($(__dragItem).hasClass("d-slide")){
-                        _parentFind = true;
-                    }else{
-                        __dragItem = __dragItem.parentNode;
-                    }
-                }
-                console.log(__dragItem);
-                var lastID = $($(__dragItems).last()[0]).data("slide-id");
-                for (var i=lastID +1; i<= (lastID + 1 + slideView) ; i++){
-                    var targetItem = $(dragItemsObj[i-1].parentNode.parentNode).clone();
-                    container.append(targetItem[0]);
-                    $(targetItem[0]).css("translate","translate3d( -1000px , 100px , 0)");
-                }
-            }
-            function goLeft() {
-                var __dragItems = document.querySelectorAll(".slide-fix");
-                var firstID = $($(__dragItems).first()[0]).data("slide-id");
-                for (var i=firstID +1; i<= (firstID + 1 + slideView) ; i++){
-                    var targetItem = $(dragItemsObj[i-1].parentNode.parentNode).clone();
-                    container.prepend(targetItem[0]);
-                }
-            }
+
 
         });
+
+        function goRight() {
+            var __dragItems = $(".d-slide");
+            for(var i=0;i<slideMove;i++){
+                console.log($(__dragItems[i]).remove());
+            }
+            __dragItems = $(".d-slide");
+            $(__dragItems).each(function (index,item) {
+                // xOffset += (slideView * slideWidth);
+            })
+            containerPaddingLeft = parseInt($(container).css("padding-left").slice(0,-2) ) + (slideMove * slideWidth);
+            console.log(containerPaddingLeft);
+            $(container).css("padding-left",containerPaddingLeft + "px");
+            // var lastID = $($(__dragItems).last()[0]).data("slide-id");
+            // for (var i=lastID +1; i<= (lastID + 1 + slideView) ; i++){
+            //     var targetItem = $(dragItemsObj[i-1].parentNode.parentNode).clone();
+            //     container.append(targetItem[0]);
+            //     $(targetItem[0]).css("translate","translate3d( -1000px , 100px , 0)");
+            // }
+        }
+        function goLeft() {
+            var __dragItems = document.querySelectorAll(".slide-fix");
+            var firstID = $($(__dragItems).first()[0]).data("slide-id");
+            for (var i=firstID +1; i<= (firstID + 1 + slideView) ; i++){
+                var targetItem = $(dragItemsObj[i-1].parentNode.parentNode).clone();
+                container.prepend(targetItem[0]);
+            }
+        }
 
     });
 });
