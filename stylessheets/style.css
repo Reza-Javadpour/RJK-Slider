@@ -1,6 +1,5 @@
 .draggable-slider {
-  border: solid 5px red;
-  margin-left: 1800px; }
+  overflow: hidden; }
   .draggable-slider .draggable-slider-container {
     width: 100%;
     padding-top: 50px;
@@ -9,9 +8,10 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    overflow: hidden;
     touch-action: none; }
     .draggable-slider .draggable-slider-container .d-slide {
-      width: 300px;
+      width: 100%;
       padding: 0 10px;
       touch-action: none;
       user-select: none;

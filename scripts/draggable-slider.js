@@ -2,6 +2,7 @@ $(document).ready(function () {
     var draggableSliderContainer = document.querySelector(".draggable-slider-container");
     $(draggableSliderContainer).each(function (index,container) {
         var draggableSlider = document.querySelector(".draggable-slider");
+        var draggableSliderWidth = $(container.parentNode).width();
         var dragItems = document.querySelectorAll(".slide-fix");
         var slideCount = document.querySelectorAll(".d-slide").length;
         var slideWidth = $(container).data("slide-width");
@@ -16,7 +17,7 @@ $(document).ready(function () {
         var dragItemsObj = [];
 
         container.style.width = (containerWidth * 3) + "px"; /* For Test */
-        draggableSlider.style.width = (slideWidth * slideView) + "px";
+        // draggableSlider.style.width = (slideWidth * slideView) + "px";
 
         $(dragItems).each(function (index,dragItem) {
             dragItemsObj.push(dragItem);
@@ -49,7 +50,10 @@ $(document).ready(function () {
                     }
                 }
             }
+            var slideSize;
 
+            $(dragItem).css("width",draggableSliderWidth / slideView + "px");
+            slideSize = draggableSliderWidth / slideView;
 
             container.addEventListener("touchstart", dragStart, false);
             container.addEventListener("touchend", dragEnd, false);
@@ -59,8 +63,8 @@ $(document).ready(function () {
             container.addEventListener("mouseup", dragEnd, false);
             container.addEventListener("mousemove", drag, false);
 
-            dragItem.style.transform = "translate3d(" + -(slideWidth * slideView) + "px, " + 0 + "px, 0)";
-            xOffset = -(slideWidth * slideView);
+            dragItem.style.transform = "translate3d(" + -(slideSize * slideView) + "px, " + 0 + "px, 0)";
+            xOffset = -(slideSize * slideView);
 
             function dragStart(e) {
                 dragItem.style.transition = "0s";
@@ -118,14 +122,13 @@ $(document).ready(function () {
         });
 
         function goRight() {
-            console.log(dragItems);
             var __dragItems = $(".d-slide");
             for(var i=0;i<slideMove;i++){
                 $(__dragItems[i]).remove();
             }
             __dragItems = $(".d-slide");
             // $(__dragItems).each(function (index,item) {
-                // xOffset += (slideView * slideWidth);
+            // xOffset += (slideView * slideWidth);
             // });
             containerPaddingLeft = parseInt($(container).css("padding-left").slice(0,-2) ) + (slideMove * slideWidth);
             $(container).css("padding-left",containerPaddingLeft + "px");
@@ -170,7 +173,6 @@ $(document).ready(function () {
                     container.append(targetItem[0]);
                     $(targetItem[0]).css("transform","translate( -" + (slideMove * slideWidth * 3) + "px , 0)");
                 }
-                console.log(i);
             }
             refreshDragItems();
             // var __dragItems = document.querySelectorAll(".slide-fix");
