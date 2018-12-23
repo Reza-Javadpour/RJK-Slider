@@ -17,7 +17,6 @@ $(document).ready(function () {
         var dragItemsObj = [];
 
         container.style.width = (containerWidth * 3) + "px"; /* For Test */
-        // draggableSlider.style.width = (slideWidth * slideView) + "px";
 
         $(dragItems).each(function (index,dragItem) {
             dragItemsObj.push(dragItem);
@@ -38,7 +37,9 @@ $(document).ready(function () {
 
         refreshDragItems();
         $(dragItems).each(function (index,dragItem) {
+            var slideSize;
             var _dragItem = dragItem;
+
             findSlideParent(dragItem);
             function findSlideParent() {
                 var parentFind = false;
@@ -50,7 +51,6 @@ $(document).ready(function () {
                     }
                 }
             }
-            var slideSize;
 
             $(dragItem).css("width",draggableSliderWidth / slideView + "px");
             slideSize = draggableSliderWidth / slideView;
@@ -58,7 +58,6 @@ $(document).ready(function () {
             container.addEventListener("touchstart", dragStart, false);
             container.addEventListener("touchend", dragEnd, false);
             container.addEventListener("touchmove", drag, false);
-
             container.addEventListener("mousedown", dragStart, false);
             container.addEventListener("mouseup", dragEnd, false);
             container.addEventListener("mousemove", drag, false);
@@ -85,11 +84,11 @@ $(document).ready(function () {
                 if(currentX <= (xOffset-((slideWidth * slideMove)/2))) {
                     xOffset -= (slideWidth * slideMove);
                     dragItem.style.transform = "translate3d(" + xOffset + "px, " + 0 + "px, 0)";
-                    goRight();
-                }else if(currentX > (xOffset+((slideWidth * slideMove)/2))){
-                    xOffset += (slideWidth * slideMove);
+                    goRight(slideSize);
+                }else if(currentX > (xOffset+((slideSize * slideMove)/2))){
+                    xOffset += (slideSize * slideMove);
                     dragItem.style.transform = "translate3d(" + xOffset + "px, " + 0 + "px, 0)";
-                    goLeft();
+                    goLeft(slideSize);
                 }else{
                     dragItem.style.transform = "translate3d(" + xOffset + "px, " + 0 + "px, 0)";
                     initialX = 0;
@@ -116,23 +115,17 @@ $(document).ready(function () {
             function setTranslate(xPos, yPos, el) {
                 el.style.transform = "translate3d(" + xPos + "px, " + 0 + "px, 0)";
             }
-
-
-
         });
 
-        function goRight() {
+        function goRight(_slideSize) {
             var __dragItems = $(".d-slide");
             for(var i=0;i<slideMove;i++){
                 $(__dragItems[i]).remove();
             }
+
             __dragItems = $(".d-slide");
-            // $(__dragItems).each(function (index,item) {
-            // xOffset += (slideView * slideWidth);
-            // });
             containerPaddingLeft = parseInt($(container).css("padding-left").slice(0,-2) ) + (slideMove * slideWidth);
             $(container).css("padding-left",containerPaddingLeft + "px");
-
 
             var lastID = $($(__dragItems).last()[0]).data("slide-id");
             for (var i=lastID +1; i< (lastID + 1 + slideView) ; i++){
@@ -144,43 +137,40 @@ $(document).ready(function () {
             dragItems = document.querySelectorAll(".slide-fix");
         }
 
-        function goLeft() {
+        function goLeft(_slideSize) {
             var __dragItems = $(".d-slide");
+
+            //#####  Delete Right side items :
             for(var i=(__dragItems.length - slideMove);i<(__dragItems.length);i++){
                 $(__dragItems[i]).remove();
             }
-            __dragItems = $(".d-slide");
+            //#####  Add Padding Right for new Items :
             containerPaddingRight = parseInt($(container).css("padding-right").slice(0,-2) ) + (slideMove * slideWidth);
             $(container).css("padding-right",containerPaddingRight + "px");
 
-
+            //#####  Find First Item ID :
+            __dragItems = $(".d-slide");
             var firstID = $($(__dragItems).first()).data("slide-id");
             if(firstID < slideView){
                 if(firstID - slideView <= 0) {
                     firstID = firstID - slideView + slideCount;
                 }
             }
-            // var lastID = $($(__dragItems).last()[0]).data("slide-id");
+
             var targetItem;
             for (var i=firstID; i< (firstID + slideView) ; i++){
                 if(i <= slideCount){
                     targetItem = $(dragItemsObj[i-1].parentNode.parentNode).clone();
                     container.append(targetItem[0]);
-                    $(targetItem[0]).css("transform","translate( -" + (slideMove * slideWidth * 3) + "px , 0)");
+                    $(targetItem[0]).css("transform","translate( -" + (slideMove * _slideSize * 3) + "px , 0)");
                 }else{
                     var _i = i - slideCount;
                     targetItem = $(dragItemsObj[_i-1].parentNode.parentNode).clone();
                     container.append(targetItem[0]);
-                    $(targetItem[0]).css("transform","translate( -" + (slideMove * slideWidth * 3) + "px , 0)");
+                    $(targetItem[0]).css("transform","translate( -" + (slideMove * _slideSize * 3) + "px , 0)");
                 }
             }
             refreshDragItems();
-            // var __dragItems = document.querySelectorAll(".slide-fix");
-            // var firstID = $($(__dragItems).first()[0]).data("slide-id");
-            // for (var i=firstID +1; i<= (firstID + 1 + slideView) ; i++){
-            //     var targetItem = $(dragItemsObj[i-1].parentNode.parentNode).clone();
-            //     container.prepend(targetItem[0]);
-            // }
         }
 
         function refreshDragItems() {
