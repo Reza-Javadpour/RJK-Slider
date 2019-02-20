@@ -3,52 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>Draggable Slider</title>
+    <title>RJK Slider</title>
     <link rel="stylesheet" href="./stylessheets/style.css">
     <script src="./scripts/jquery.min.js"></script>
-    <script src="./scripts/draggable-slider.js"></script>
+    <script src="./scripts/rjk-slider.js"></script>
 </head>
-<body style="background-color: #f1f1f1;height: 200vh;overflow-x: hidden">
+<body style="overflow-x: hidden;direction: ltr">
 
-<div class="draggable-slider">
-    <div class="draggable-slider-container" data-slide-width="300" data-slide-view="4" data-slide-move="4">
-        <div class="d-slide" data-slide-id="1" data-slide-position="">
+<h3 class="rjk-slider-title">RJK-Slider (draggable Slider)</h3>
+
+<div class="rjk-slider">
+    <div class="rjk-slider-container" data-slide-width="222" data-slide-view="4" data-slide-md="2"  data-slide-sm="1"  data-slide-xs="2" data-slide-move="4">
+        <div class="d-slide" data-slide-id="1">
             <div class="slide-content">
                 <img src="./images/slide1.jpg" alt="slide1">
                 <!--<button>More info</button>-->
                 <div class="slide-fix"></div>
             </div>
         </div>
-        <div class="d-slide" data-slide-id="2" data-slide-position="">
+        <div class="d-slide" data-slide-id="2">
             <div class="slide-content">
                 <img src="./images/slide2.jpg" alt="slide2">
                 <!--<button>More info</button>-->
                 <div class="slide-fix"></div>
             </div>
         </div>
-        <div class="d-slide" data-slide-id="3" data-slide-position="">
+        <div class="d-slide" data-slide-id="3">
             <div class="slide-content">
                 <img src="./images/slide3.jpg" alt="slide3">
                 <!--<button>More info</button>-->
                 <div class="slide-fix"></div>
             </div>
         </div>
-        <div class="d-slide" data-slide-id="4" data-slide-position="">
+        <div class="d-slide" data-slide-id="4">
             <div class="slide-content">
                 <img src="./images/slide4.jpg" alt="slide4">
                 <!--<button>More info</button>-->
                 <div class="slide-fix"></div>
             </div>
         </div>
-        <div class="d-slide" data-slide-id="5" data-slide-position="">
+        <div class="d-slide" data-slide-id="5">
             <div class="slide-content">
                 <img src="./images/slide5.jpg" alt="slide5">
                 <!--<button>More info</button>-->
                 <div class="slide-fix"></div>
             </div>
         </div>
-        <div class="d-slide" data-slide-id="6" data-slide-position="">
-            <div class="slide-content" data-slide-id="6">
+        <div class="d-slide" data-slide-id="6">
+            <div class="slide-content">
                 <img src="./images/slide6.jpg" alt="slide6">
                 <!--<button>More info</button>-->
                 <div class="slide-fix"></div>
@@ -57,7 +59,11 @@
     </div>
 </div>
 
+<h3 class="rjk-slider-title">Follow me on <a href="https://github.com/Reza-Javadpour/RJK-Slider">Github</a></h3>
 
+<script type="text/javascript">
+    $(".rjk-slider-container").rjkSlider();
+</script>
 
 
 

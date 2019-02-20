@@ -1,0 +1,48 @@
+.rjk-slider
+  //border: solid 5px red //Enable For Test
+  overflow: hidden //Disable For Test
+  .rjk-slider-container
+    width: 100%
+    flex-direction: row
+    padding-top: 50px
+    padding-bottom: 50px
+    background-color: #e2e2e2
+    display: flex
+    align-items: center
+    justify-content: flex-start
+    overflow: hidden //Disable For Test
+    touch-action: none
+    transform: translateX(-1120px)
+    .d-slide
+      width: 100%
+      padding: 0 10px
+      touch-action: none
+      user-select: none
+      box-sizing: border-box
+      transform: none !important
+      //min-width: fit-content
+      .slide-content
+        background-color: #fff
+        border: solid 1px #eee
+        min-height: 100%
+        position: relative
+        .slide-fix
+          position: absolute
+          top: 0
+          width: 100%
+          height: 100%
+          display: block
+          z-index: 10
+          touch-action: none
+          user-select: none
+          &:hover
+            cursor: pointer
+        img
+          width: 100%
+        button
+          position: absolute
+          bottom: 0
+          right: 0
+          z-index: 2000
+      &:hover
+        cursor: pointer
