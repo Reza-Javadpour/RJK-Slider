@@ -1,3 +1,4 @@
+
 (function ( $ ) {
 
     var responsive_mode_991 = false;
@@ -76,6 +77,7 @@
             var initialML = currentML;
             var runOnce = true;
             var runOnce_2 = true;
+            var runOnce_3 = true;
             var container_margin_left = 0;
             var rjk_container_width = ($(this.parentNode).outerWidth() * 4);
             var clickDetect;
@@ -113,7 +115,44 @@
             //   #################################
             //   #####   MAIN SCRIPT START   #####
             var _this = this;
+
             $(dragItems).each(function (index,dragItem) {
+
+                $(".slide-left").on("click",function () {
+                    if (runOnce_3){
+                        runOnce = true;
+                        runOnce_2 = true;
+                        $(_this).css("transition", "0.5s");
+                        goLeft(slideSize);
+                        setTimeout(function () {
+                            $(_this).css("transition","0s");
+                        },500);
+                        runOnce_3 = false;
+                    }
+                    if(index === (dragItems.length - 1)){
+                        runOnce = true;
+                        runOnce_2 = true;
+                        runOnce = true;
+                        runOnce_2 = true;
+                        runOnce_3 = true;
+                    }
+                });
+
+                $(".slide-right").on("click",function () {
+                    if (runOnce_3){
+                        $(_this).css("transition", "0.5s");
+                        goRight(slideSize);
+                        setTimeout(function () {
+                            $(_this).css("transition","0s");
+                        },500);
+                        runOnce_3 = false;
+                    }
+                    if(index == (dragItems.length - 1)){
+                        runOnce = true;
+                        runOnce_2 = true;
+                        runOnce_3 = true;
+                    }
+                });
 
                 var slideSize;
                 var _dragItem = dragItem;
@@ -146,6 +185,7 @@
                     e.preventDefault();
                     runOnce = true;
                     runOnce_2 = true;
+                    runOnce_3 = true;
                     dragItem.style.transition = "0s";
                     if (e.type === "touchstart") {
                         initialX = e.touches[0].clientX - xOffset;
@@ -168,7 +208,7 @@
                     }
                     setTimeout(function () {
                         $(_this).css("transition","0s");
-                    },1000);
+                    },500);
                     active = false;
 
                 }
@@ -266,7 +306,7 @@
                                 firstNewItemID = 0
                             }
                         }
-                    },1000);
+                    },500);
                 }
 
                 function goLeft(_slideSize) {
@@ -336,7 +376,7 @@
                             }
                         }
 
-                    },1000);
+                    },500);
                 }
             });
             //   #####    MAIN SCRIPT END    #####
