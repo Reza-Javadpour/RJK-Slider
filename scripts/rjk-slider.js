@@ -47,22 +47,8 @@
             var slide_md = $(this).data("slide-md");
             var slide_sm = $(this).data("slide-sm");
             var slide_xs = $(this).data("slide-xs");
-
             var slideView;
             var slideMove;
-            if(responsive_mode_991){
-                slideMove = 1;
-                slideView = slide_md;
-            }else if(responsive_mode_767){
-                slideMove = 1;
-                slideView = slide_sm;
-            }else if(responsive_mode_480){
-                slideMove = 1;
-                slideView = slide_xs;
-            }else{
-                slideMove = $(this).data("slide-move");
-                slideView = $(this).data("slide-view");
-            }
             var active = false;
             var currentX;
             var initialX;
@@ -77,49 +63,14 @@
             var container_margin_left = 0;
             var rjk_container_width = ($(this.parentNode).outerWidth() * 4);
             var clickDetect;
+            detectWindowSize(this);
 
-            function initial(dragItem) {
-                x_991 = window.matchMedia("(min-width: 768px) and (max-width: 991px)");
+            //   ###   Initial again Slider   ###
+            function initial() {
                 r_991(x_991);
-                function r_991(x) {
-                    if(x.matches) {
-                        responsive_mode_991 = true;
-                    }else{
-                        responsive_mode_991 = false;
-                    }
-                }
-                var x_767 = window.matchMedia("(min-width: 481px) and (max-width: 767px)");
                 r_767(x_767);
-                function r_767(x) {
-                    if(x.matches) {
-                        responsive_mode_767 = true;
-                    }else{
-                        responsive_mode_767 = false;
-                    }
-                }
-                var x_480 = window.matchMedia("(max-width: 480px)");
                 r_480(x_480);
-                function r_480(x) {
-                    if(x.matches) {
-                        responsive_mode_480 = true;
-                    }else{
-                        responsive_mode_480 = false;
-                    }
-                }
-                if(responsive_mode_991){
-                    slideMove = 1;
-                    slideView = slide_md;
-                }else if(responsive_mode_767){
-                    slideMove = 1;
-                    slideView = slide_sm;
-                }else if(responsive_mode_480){
-                    slideMove = 1;
-                    slideView = slide_xs;
-                }else{
-                    slideMove = $(_this).data("slide-move");
-                    slideView = $(_this).data("slide-view");
-                }
-                $(dragItem).css("width",rjkSliderWidth / slideView + "px");
+                detectWindowSize(_this);
             }
 
             //   ###   Set width on rjk items :
@@ -431,6 +382,21 @@
                     },500);
                 }
             });
+            function detectWindowSize(slider_container) {
+                if(responsive_mode_991){
+                    slideMove = 1;
+                    slideView = slide_md;
+                }else if(responsive_mode_767){
+                    slideMove = 1;
+                    slideView = slide_sm;
+                }else if(responsive_mode_480){
+                    slideMove = 1;
+                    slideView = slide_xs;
+                }else{
+                    slideMove = $(slider_container).data("slide-move");
+                    slideView = $(slider_container).data("slide-view");
+                }
+            }
             //   #####    MAIN SCRIPT END    #####
             //   #################################
 
