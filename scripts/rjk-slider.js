@@ -33,10 +33,6 @@
         }
     }
 
-    // $(window).on("resize",function () {
-    //
-    // });
-
     $.fn.rjkSlider = function() {
 
         return this.each(function() {
@@ -438,9 +434,6 @@
             //   #####    MAIN SCRIPT END    #####
             //   #################################
 
-            function aaa() {
-                console.log("this is aaa");
-            }
 
             //   ###   Functions :
             function refreshDragItems(t) {
