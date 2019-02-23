@@ -43,7 +43,7 @@
 
             var dragItems = [];
             $(this).children().each(function (i,v) {
-                dragItems.push($($(v).children()[0]).children().filter(".slide-fix")[0])
+                dragItems.push($($(v).children()[0]).children().filter(".slide-fix")[0]);
             });
             var rjkSliderWidth = $(this.parentNode).width();
             var slideCount = $(this).children().length;
@@ -82,6 +82,50 @@
             var rjk_container_width = ($(this.parentNode).outerWidth() * 4);
             var clickDetect;
 
+            function initial(dragItem) {
+                x_991 = window.matchMedia("(min-width: 768px) and (max-width: 991px)");
+                r_991(x_991);
+                function r_991(x) {
+                    if(x.matches) {
+                        responsive_mode_991 = true;
+                    }else{
+                        responsive_mode_991 = false;
+                    }
+                }
+                var x_767 = window.matchMedia("(min-width: 481px) and (max-width: 767px)");
+                r_767(x_767);
+                function r_767(x) {
+                    if(x.matches) {
+                        responsive_mode_767 = true;
+                    }else{
+                        responsive_mode_767 = false;
+                    }
+                }
+                var x_480 = window.matchMedia("(max-width: 480px)");
+                r_480(x_480);
+                function r_480(x) {
+                    if(x.matches) {
+                        responsive_mode_480 = true;
+                    }else{
+                        responsive_mode_480 = false;
+                    }
+                }
+                if(responsive_mode_991){
+                    slideMove = 1;
+                    slideView = slide_md;
+                }else if(responsive_mode_767){
+                    slideMove = 1;
+                    slideView = slide_sm;
+                }else if(responsive_mode_480){
+                    slideMove = 1;
+                    slideView = slide_xs;
+                }else{
+                    slideMove = $(_this).data("slide-move");
+                    slideView = $(_this).data("slide-view");
+                }
+                $(dragItem).css("width",rjkSliderWidth / slideView + "px");
+            }
+
             //   ###   Set width on rjk items :
             this.style.width = (containerWidth * 3) + "px"; /* For Test */
 
@@ -117,6 +161,16 @@
             var _this = this;
 
             $(dragItems).each(function (index,dragItem) {
+
+                //   ###   initial slider when resize page   ###
+                $(window).resize(function(){
+                    initial(dragItem);
+                    rjkSliderWidth = $(_this.parentNode.parentNode).width();
+                    slideSize = rjkSliderWidth / slideView;
+                    $(_this.childNodes).each(function (i,v) {
+                        $(v).css("width", (rjkSliderWidth / slideView) + "px")
+                    })
+                });
 
                 $(".slide-left").on("click",function () {
                     if (runOnce_3){
@@ -159,7 +213,9 @@
 
                 //   ###   Find Slide Parent :
                 dragItem = $(dragItem).parents(".d-slide")[0];
+
                 $(dragItem).css("width",rjkSliderWidth / slideView + "px");
+
                 slideSize = rjkSliderWidth / slideView;
 
                 //   ###   Event Listener :
@@ -381,6 +437,10 @@
             });
             //   #####    MAIN SCRIPT END    #####
             //   #################################
+
+            function aaa() {
+                console.log("this is aaa");
+            }
 
             //   ###   Functions :
             function refreshDragItems(t) {
